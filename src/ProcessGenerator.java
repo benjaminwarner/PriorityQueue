@@ -14,7 +14,7 @@ public class ProcessGenerator {
     }
 
     public Process getNewProcess(int currentTime, int maximumProcessTime, int maximumPriorityLevel) {
-        int timeToFinish = this.random.nextInt(maximumProcessTime) + currentTime;
+        int timeToFinish = this.random.nextInt(maximumProcessTime);
         int priority = this.random.nextInt(maximumPriorityLevel);
         return new Process(currentTime, priority, timeToFinish, maximumPriorityLevel);
     }
