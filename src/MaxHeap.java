@@ -112,12 +112,12 @@ public class MaxHeap<T>
 
     private int left(int index) {
         // return the index of the parents left child
-        return index * 2;
+        return index * 2 + 1;
     }
 
     private int right(int index) {
         // return the index of the parents right child
-        return index * 2 + 1;
+        return index * 2 + 2;
     }
 
     private int parent(int index) {
