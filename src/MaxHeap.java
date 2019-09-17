@@ -11,19 +11,21 @@ public class MaxHeap<T>
     private int capacity;
     private final int DEFAULT_CAPACITY = 50;
 
+    @SuppressWarnings("unchecked")
     public MaxHeap() {
-        this.heap = new HeapNode<T>[DEFAULT_CAPACITY];
+        this.heap = new HeapNode[DEFAULT_CAPACITY];
         this.heapSize = 0;
         this.capacity = DEFAULT_CAPACITY;
     }
 
-    public MaxHeap(Object[] values, int[] keys) {
+    @SuppressWarnings("unchecked")
+    public MaxHeap(T[] values, int[] keys) {
         if (values.length != keys.length)
             throw new RuntimeException();
 
         // assume that more values will be added than what was provided, so provide a bit
         // of a buffer on the capacity
-        this.heap = new HeapNode<T>[values.length + DEFAULT_CAPACITY];
+        this.heap = new HeapNode[values.length + DEFAULT_CAPACITY];
         for (int i = 0; i < values.length; ++i)
             this.heap[i] = new HeapNode<T>(values[i], keys[i]);
         this.heapSize = values.length;
@@ -43,6 +45,7 @@ public class MaxHeap<T>
         T value = heap[0].getObject();
         heap[0] = heap[heapSize - 1];
         heap[heapSize - 1] = null;
+        --heapSize;
         maxHeapify(0);
         return value;
     }
@@ -50,13 +53,19 @@ public class MaxHeap<T>
     public void increaseHeapKey(int index, int key) {
         // increase the priority of the value located at index
         // call maxHeapify afterwards
-        heap[index].setKey(key);
+        // apparently, the indexing for this method is 1-based instead
+        // of 0-based. This is incredibly dumb, but whatever.
+        heap[index - 1].setKey(key);
+        for (int i = index; i > -1; i--)
+            maxHeapify(i);
     }
 
     public void maxHeapInsert(T value, int key) {
+        if (heapSize == capacity)
+            expandCapacity();
         heap[heapSize] = new HeapNode<T>(value, key);
         heapSize++;
-        for (int i = parent(heapSize - 1); i > -1; --i)
+        for (int i = heapSize - 1; i > -1; --i)
             maxHeapify(i);
     }
 
@@ -71,9 +80,9 @@ public class MaxHeap<T>
         int l = left(index);
         int r = right(index);
         int largest = index;
-        if (l <= heapSize && heap[l].getKey() > heap[index].getKey())
+        if (l < heapSize && heap[l].getKey() > heap[index].getKey())
             largest = l;
-        if (r <= heapSize && heap[r].getKey() > heap[largest].getKey())
+        if (r < heapSize && heap[r].getKey() > heap[largest].getKey())
             largest = r;
         if (largest != index) {
             exchange(index, largest);
@@ -122,5 +131,18 @@ public class MaxHeap<T>
 
     private void setCapacity(int capacity) {
         // do nothing; there's no need for this function
+    }
+
+    public String toString() {
+        String s = "[";
+
+        for (int i = 0; i < heapSize - 1; ++i) {
+            s += String.format("%s, ", heap[i].getKey());
+        }
+
+        s += heap[heapSize - 1].getKey();
+        s += "]";
+
+        return s;
     }
 }
