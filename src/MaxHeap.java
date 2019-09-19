@@ -34,7 +34,8 @@ public class MaxHeap<T>
      * This is because, it's highly likely that additional values
      * will be added to the heap.
      *
-     * @param T[] values, int[] keys
+     * @param T[] - the values to insert
+     * @param int[] - the keys for the values
      */
     @SuppressWarnings("unchecked")
     public MaxHeap(T[] values, int[] keys) {
@@ -83,8 +84,6 @@ public class MaxHeap<T>
      * @param int index, int key
      */
     public void increaseHeapKey(int index, int key) {
-        // increase the priority of the value located at index
-        // call maxHeapify afterwards
         // apparently, the indexing for this method is 1-based instead
         // of 0-based. This is incredibly dumb, but whatever.
         heap[index - 1].setKey(key);
@@ -96,7 +95,8 @@ public class MaxHeap<T>
      * Insert a value with key into the heap.
      * Max-Heapify the heap afterwards.
      *
-     * @param T value, int key
+     * @param T - the value
+     * @param int - the key of the value
      */
     public void maxHeapInsert(T value, int key) {
         if (heapSize == capacity)
@@ -112,8 +112,6 @@ public class MaxHeap<T>
      * with the expanded capacity.
      */
     private void expandCapacity() {
-        // double the capacity and create a new array with the
-        // new capacity
         capacity *= 2;
         heap = Arrays.copyOf(heap, capacity);
     }
@@ -122,7 +120,7 @@ public class MaxHeap<T>
      * Recursively move the node at index to its proper place, maintaining
      * the max-heap structure.
      *
-     * @param int index
+     * @param int - index of the node to start with
      */
     public void maxHeapify(int index) {
         int l = left(index);
@@ -141,7 +139,7 @@ public class MaxHeap<T>
     /**
      * Swap the node at index with its parent.
      *
-     * @param int index
+     * @param int - index of the node to swap with its parent
      */
     private void moveUp(int index) {
         // swap the node at index with its parent
@@ -150,6 +148,8 @@ public class MaxHeap<T>
 
     /**
      * Get the number of elements in the heap.
+     *
+     * @return int
      */
     public int getHeapSize() {
         return this.heapSize;
@@ -167,7 +167,8 @@ public class MaxHeap<T>
     /**
      * Swap the position of first with second.
      *
-     * @param int first, int second
+     * @param int - the index of the first node
+     * @param int - the index of the second node
      */
     private void exchange(int first, int second) {
         HeapNode<T> node1 = heap[first];
@@ -179,6 +180,8 @@ public class MaxHeap<T>
     /**
      * Get the index of the nodes left child at index.
      *
+     * @param int - the index of the parent
+     *
      * @return int
      */
     private int left(int index) {
@@ -189,6 +192,8 @@ public class MaxHeap<T>
     /**
      * Get the index of the nodes right child at index.
      *
+     * @param int - the index of the parent
+     *
      * @return int
      */
     private int right(int index) {
@@ -198,16 +203,40 @@ public class MaxHeap<T>
 
     /**
      * Get the index of nodes parent.
+     *
+     * @param int - the index of child node
+     *
+     * @return int
      */
     private int parent(int index) {
         // return the index of the childs parent
         return index / 2;
     }
 
+    /**
+     * Setter for the heapSize instance variable.
+     *
+     * Seeing as how the heapSize instance variable is private,
+     * this function really has no use (until it's decided to enforce
+     * some behavior regarding it). So, this function does
+     * nothing but is included because the assignment said
+     * I needed to.
+     *
+     * @param int size
+     */
     private void setHeapSize(int size) {
         // do nothing; there's no need for this function
     }
 
+    /**
+     * Setter for the capacity instance variable.
+     *
+     * Same deal with the heapSize instance variable.
+     * The variable is private, so there's no need
+     * for a setter. Function does nothing.
+     *
+     * @param int capacity
+     */
     private void setCapacity(int capacity) {
         // do nothing; there's no need for this function
     }

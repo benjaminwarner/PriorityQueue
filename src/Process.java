@@ -1,7 +1,12 @@
 /**
- * This class models CPU process.
+ * This class models a CPU process.
  *
  * @author Benjamin Warner
+ *
+ * @param int - the arrival time of the process
+ * @param int - the priority for the process
+ * @param int - the amount of time it'll take for the process to finish
+ * @param int - the maximum priority for the process
  */
 
 public class Process {
@@ -13,8 +18,6 @@ public class Process {
 
     /**
      * Create a new Process object
-     *
-     * @param int arrivalTime, int priorityLevel, int timeToFinish, int maxPriorityLevel
      */
     public Process(int arrivalTime, int priorityLevel, int timeToFinish, int maxPriorityLevel) {
         this.arrivalTime = arrivalTime;
@@ -127,7 +130,7 @@ public class Process {
     /**
      * Set the timeToFinish to time. If time is less than 0, do nothing.
      *
-     * @param int
+     * @param int - new amount of time it'll take to finish
      */
     private void setTimeToFinish(int time) {
         if (time < 0)
@@ -138,7 +141,7 @@ public class Process {
     /**
      * Set the timeNotProcessed to time. If time is less than 0, do nothing.
      *
-     * @param int
+     * @param int - new amount of time the process hasn't processed
      */
     private void setTimeNotProcessed(int time) {
         if (time < 0)
@@ -146,8 +149,14 @@ public class Process {
         this.timeNotProcessed = time;
     }
 
+    /**
+     * Set the arrivalTime to time. Function does nothing
+     * because this shouldn't change, and the variable
+     * is private. Here because the assignment requires it.
+     *
+     * @param int - new arrival time
+     */
     private void setArrivalTime(int time) {
-        // why would this ever change??
     }
 
     /**
@@ -164,7 +173,7 @@ public class Process {
      * If the current priorityLevel is greater than the new
      * max, set the priorityLevel to the new max.
      *
-     * @param int
+     * @param int - the new maximum for the processes priority
      */
     public void setMaxPriorityLevel(int level) {
         this.maxPriorityLevel = level;
